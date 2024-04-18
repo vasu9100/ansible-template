@@ -1,8 +1,8 @@
-- name: copying {{ component }} serive file
-  copy:
-    src: "{{component}}.service.j2"
-    dest: "/etc/systemd/system/{{ component }}.service" 
-  template: yes   
+- name: copying {{ component }} service file
+  template:
+    src: "{{ component }}.service.j2"
+    dest: "/etc/systemd/system/{{ component }}.service"
+ 
 
 
 - name: RELOAD SYSTEMD DAEMON of {{component}}

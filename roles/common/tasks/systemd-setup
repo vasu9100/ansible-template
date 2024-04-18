@@ -1,0 +1,13 @@
+- name: copying {{ component }} serive file
+  copy:
+    src: "{{component}}.service"
+    dest: "/etc/systemd/system/{{ component }}.service"
+
+- name: RELOAD SYSTEMD DAEMON of {{component}}
+  systemd:
+    daemon_reexec: yes    
+
+- name: RESTART {{component}} SERVICE
+  systemd:
+    name: "{{ component }}"
+    state: restarted 

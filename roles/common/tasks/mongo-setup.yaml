@@ -25,7 +25,7 @@
 
 - name: Print user Count
   debug:
-    msg: "{{ ser_element_count.stdout }}"
+    msg: "{{ user_element_count.stdout }}"
   when: component == "user"
 
 

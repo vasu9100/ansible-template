@@ -23,6 +23,12 @@
   register: user_element_count
   when: component == "user"
 
+- name: Print user Count
+  debug:
+    msg: "{{ ser_element_count.stdout }}"
+  when: component == "user"
+
+
 - name: Load data into catalogue MongoDB
   ansible.builtin.shell: "mongo --host {{MONGO_HOST}}  < /app/schema/{{ component }}.js"
   when: component == "catalogue" and products_count.stdout == "0"

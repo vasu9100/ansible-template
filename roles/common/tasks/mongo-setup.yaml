@@ -9,7 +9,7 @@
     state: present
 
 - name: Get the catalogue entries count
-  ansible.builtin.shell: mongo --host mongo.gonepudirobot.online --quiet --eval 'db = db.getSiblingDB("catalogue"); db.products.count()'
+  ansible.builtin.shell: mongo --host {{MONGO_HOST}}  --quiet --eval 'db = db.getSiblingDB("catalogue"); db.products.count()'
   register: products_count
   when: component == "catalogue"
 
@@ -19,14 +19,14 @@
   when: component == "catalogue"  
 
 - name: Verify User Products Count
-  ansible.builtin.shell: mongo --host mongo.gonepudirobot.online --quiet --eval 'db = db.getSiblingDB("users"); db.users.count()'
+  ansible.builtin.shell: mongo --host {{MONGO_HOST}} --quiet --eval 'db = db.getSiblingDB("users"); db.users.count()'
   register: user_element_count
   when: component == "user"
 
 - name: Load data into catalogue MongoDB
-  ansible.builtin.shell: "mongo --host mongo.gonepudirobot.online < /app/schema/{{ component }}.js"
+  ansible.builtin.shell: "mongo --host {{MONGO_HOST}}  < /app/schema/{{ component }}.js"
   when: component == "catalogue" and products_count.stdout == "0"
 
 - name: Load data into user MongoDB
-  ansible.builtin.shell: "mongo --host mongo.gonepudirobot.online < /app/schema/{{ component }}.js"
+  ansible.builtin.shell: "mongo --host {{MONGO_HOST}}  < /app/schema/{{ component }}.js"
   when: component == "user" and user_element_count.stdout == "0"
